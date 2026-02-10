@@ -1,0 +1,12 @@
+ID,Code,School,Dept,First Name,MI,Last Name,Gender,Course,Year,Status
+1,SCS-2025-000000011,sch_scs,14,Prince1,A,Tutor,Male,BSIT,1,No
+2,SCS-2025-000000012,sch_scs,14,John3,B,Alexander,Male,BSIT,2,No
+3,SCS-2025-000000013,sch_scs,14,Sarah,C,Marie,Male,BSIT,4,No
+4,SCS-2025-000000014,sch_scs,14,Michael,D,David,Male,BSIT,2,No
+5,SCS-2025-000000015,sch_scs,14,Lisa,E,Grace,Male,BSIT,4,No
+6,SCS-2025-000000016,sch_scs,14,David,F,James,Male,BSIT,2,No
+7,SCS-2025-000000017,sch_scs,14,Emily,G,Anne,Male,BSIT,3,No
+8,SCS-2025-000000018,sch_scs,14,Robert,Jr,Thomas,Male,BSIT,3,No
+9,SCS-2025-000000019,sch_scs,14,Amanda,G,Elizabeth,Male,BSIT,1,No
+10,SCS-2025-000000010,sch_scs,14,Brian,F,Christopher,Male,BSIT,3,No
+
