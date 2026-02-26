@@ -20,20 +20,42 @@ def pdf_to_csv(pdf_path, csv_path):
             with open(csv_path, mode='w', newline='', encoding='utf-8') as csv_file:
                 writer = csv.writer(csv_file)
                 total_tables = 0
-                for page in pdf.pages:
+                for i, page in enumerate(pdf.pages):
+                    # Try default extraction first
                     tables = page.extract_tables()
-                    for table in tables:
-                        for row in table:
-                            cleaned_row = []
-                            for cell in row:
-                                if cell is not None:
-                                    cleaned_cell = cell.replace('\n', ' ').strip()
-                                    cleaned_row.append(cleaned_cell)
-                                else:
-                                    cleaned_row.append("")
-                            writer.writerow(cleaned_row)
-                        writer.writerow([])
-                        total_tables += 1
+                    
+                    # If no tables found, try with different settings for dense tables
+                    if not tables:
+                        tables = page.extract_tables({
+                            "vertical_strategy": "text", 
+                            "horizontal_strategy": "text",
+                            "intersection_y_tolerance": 10
+                        })
+                    
+                    if tables:
+                        for table in tables:
+                            for row in table:
+                                cleaned_row = []
+                                for cell in row:
+                                    if cell is not None:
+                                        # Replace newlines with spaces and strip whitespace
+                                        cleaned_cell = str(cell).replace('\n', ' ').strip()
+                                        cleaned_row.append(cleaned_cell)
+                                    else:
+                                        cleaned_row.append("")
+                                writer.writerow(cleaned_row)
+                            # Add an empty row between tables
+                            writer.writerow([])
+                            total_tables += 1
+                    else:
+                        # Fallback: Extract raw text if no tables found (useful for some PDF types)
+                        text = page.extract_text()
+                        if text:
+                            writer.writerow([f"--- Page {i+1} Content (No Table Structure Found) ---"])
+                            for line in text.split('\n'):
+                                writer.writerow([line])
+                            writer.writerow([])
+                            
                 return total_tables
     except Exception as e:
         print(f"Error processing PDF: {e}")
